@@ -1,0 +1,53 @@
+Final Project
+Author:   Austin Brennan
+Email:    awbrenn@g.clemson.edu
+Class:    CPSC 4040 - Levine
+Due Date: December 3rd, 2014
+
+--------------------
+imageMusicVisualizer
+--------------------
+
+Program Description:
+    The program reads an input image and performs a spiral warp. The strength of the warp is determined
+    by a stream of data coming from the microphone. This program performs warps in real time.
+
+
+Dependencies:
+    PIL (Python Imaging Library)    1.7.1
+    PyAudio                         0.2.8
+    PyOpenGL                        3.1.0
+    Sys                             1.0
+    numpy                           1.9.1
+
+
+Use Case:
+    $> python imageMusicVisualizer.py input.img
+
+
+Commands:
+    'q' or 'Q' quits the program
+
+
+Pitfalls:
+    Since the program is written in python the warping function takes a considerable amount of time. I have
+    identified the warping portion of my code as the most significant bottleneck. It contributes to a considerable
+    amount of lag especially on larger images.
+
+    I have not removed any artifacts from the warped image. The performance hit from the warp is pretty bad, and
+    I didn't want to have anymore computational cost that would come along with doing bilinear interpolation
+    or any other algorithm.
+
+
+Strength Calculation (getStrengthFromAudio):
+    To calculate the strength of the swirl effect I take the ys array returned from the fft function and sum up
+    all of the data points. Each data point represents the amplitude of a frequency. The array starts from low
+    frequencies and goes to higher frequencies.
+
+    Once I have summed the ys values I divide by a scaling factor (frequency_sum_scaling_factor). There are 204
+    elements in the ys array, so the scaling factor is 20400. I multiplied 204 by 1000, because it brought the
+    strength to a reasonable value.
+
+
+Known Bugs:
+    - N/A
